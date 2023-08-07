@@ -1,0 +1,129 @@
+<html>
+
+<head>
+	<title>Modular TTRPG character sheet</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<script src="https://kit.fontawesome.com/cb279bfd62.js" crossorigin="anonymous"></script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body>
+	<div class="container"><!--Top heading and options bar-->
+		<h1 id="characterName" contenteditable>Character Name</h1>
+		<div class="row">
+			<button type="button" class="shadow m-1 col btn" data-toggle="modal" data-target="#diceModal"><!--Some classes nonfunctional, parts of Bootstrap that are overcomplicated to implement (drop shadows etc)-->
+				Dice Roller <i class="fa-solid fa-dice-d20"></i>
+			</button>
+			<button id="saveSheet" type="button" class="shadow m-1 col btn">
+				Save Sheet <i class="fa-solid fa-download"></i>
+			</button>
+			<!-- <button type="button" class="shadow-3 m-1 col btn">
+				Save Template
+			</button> --><!--Couldn't get around to this for the initial release date-->
+
+			<input type="file" id="file" hidden />
+			<label style="background-color: #EFEFEF" class="col m-1 btn" class="form-control" for="file">Upload <i
+					class="fa-solid fa-upload"></i></label>
+			<button type="button" class="shadow m-1 col btn" data-toggle="modal" data-target="#settingsModal">
+				System Settings <i class="fa-solid fa-gear"></i>
+			</button>
+
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="outputCol col-lg-5 col-sm-12">
+				<h3 id="statBricksHeader" contenteditable>Stats/Skills</h3>
+				<div id="statBricks">
+				</div>
+				<button id="statBricksConfirm" class="form-control btn-success add"><i
+						class="fa-solid fa-plus"></i></button>
+			</div>
+			<div class="outputCol col-lg-4 col-sm-6">
+				<h3 id="trackersHeader" contenteditable>Trackers</h3>
+				<div id="trackers"></div>
+				<button id="trackersConfirm" class="form-control btn-success add"><i
+						class="fa-solid fa-plus"></i></button>
+			</div>
+			<div class="outputCol col-lg-3 col-sm-6">
+				<h3 id="abilitiesHeader" contenteditable>Abilities</h3>
+				<div id="abilities">
+				</div>
+				<button id="abilitiesConfirm" class="form-control btn-success add"><i
+						class="fa-solid fa-plus"></i></button>
+			</div>
+		</div>
+
+
+
+
+		<!-- Dice roller (overlays when called) -->
+		<div class="modal fade" id="diceModal" tabindex="-1" role="dialog" aria-labelledby="diceModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="diceModalLabel">Dice Roller</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<input type="text" placeholder="Enter roll here!" id="diceRoller"></input>
+						<button type="button" class="btn btn-secondary" id="diceRollerConfirm"><i
+								class="fa-solid fa-dice-d20" title="Click to roll"></i></button>
+						<p id="diceResults"></p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--Settings menu. Allows you to change core die roll, and whether the tabletop system uses dice-pool maths. Custom styling/themes would go in here.-->
+		<div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="settingsModalLabel">Settings</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal ">
+							<div class="d-flex justify-content-start">
+								<label for="coreDice" class="mr-2">Core die:</label>
+								<input id="coreDice" value="1d20"></input>
+							</div>
+							<div class="d-flex justify-content-start">
+								<label for="dicePool" class="mr-2 mt-1">Dice pool:</label>
+								<input class="mr-2" type="checkbox" id="dicePool"></input>
+								<a class="mt-2" href="#" data-toggle="popover" data-trigger="hover" data-content="When ticked, stat modifiers instead determine the number of core dice to roll (i.e a +7 in a 1d20 system would instead roll 7 d20s). Make sure your core roll is just one die for proper function.
+"><i class="fa-solid fa-circle-info"></i></a>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	crossorigin="anonymous"></script>
+<script src="script.js" type="module"></script>
